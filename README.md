@@ -1,12 +1,67 @@
 # CustomFontFile Unexpected BaseLine Demo
 
-#### 1 录屏表现:
-
-<video id="video" controls=""src="./assets/video_demo.mp4" preload="none" style="zoom:50%;">
+[TOC]
 
 
 
-#### 2 Native Render 代码见 `sample_graphics.cpp`
+## 一、背景
+
+做鸿蒙平台的markdown latex公式时，需要导入一些字体.ttf文件。
+
+目前使用的方案是 OH_Drawing_RegisterFont 加载/注册自定义字体：https://github.com/openharmony/docs/blob/d513a1b69a60b369edc38bc12feffa13560f45bc/zh-cn/application-dev/graphics/custom-font-c.md
+
+使用过程中，发现y轴位置（Baseline）不太符合预期。对于不同的.ttf文件，文本内容可能在baseline上方或下方，但是目前看均绘制在了baseline下方。导致部分文本内容在y轴上误往下偏移了。
+
+
+
+## 二、bug表现
+
+比如`cmmi10.ttf`这个字体文件。使用 https://font.qqe2.com/ 这个网站导入、编辑该字体，我们可以看到baseline在文字的下方。￵
+
+![img](./assets/MTY4ODg1MDE1NDIyODk0MA_405606_3Fy6ndL5xh3c7M5e_1747744689.jpeg)
+
+在安卓平台预览是符合预期的。
+
+![img](./assets/MTY4ODg1MDE1NDIyODk0MA_143200_9_BlkiB9ipNz846b_1747744702.jpeg)
+
+但在鸿蒙上，文本内容跑到了y轴的下面。
+
+![img](./assets/MTY4ODg1MDE1NDIyODk0MA_485462_aWZ0yVzbK2dymU7p_1747744707.jpeg)
+
+## 三、已尝试手段
+
+### 1、设置基线 OH_Drawing_SetTextStyleBaseLine
+
+笔者尝试分别设置baseline为enum的两个值，没有肉眼可见的变化。
+
+```C++
+typedef enum OH_Drawing_TextBaseline {
+    /** Alphabetic, where the letters in alphabets like English sit on. */
+    TEXT_BASELINE_ALPHABETIC,
+    /** Ideographic. The baseline is at the bottom of the text area. */
+    TEXT_BASELINE_IDEOGRAPHIC,
+} OH_Drawing_TextBaseline;
+```
+
+### 2、查找baseline offset相关代码
+
+只找到了placeholder相关的代码：`OH_Drawing_PlaceholderVerticalAlignment`。
+
+### 3、调整行高
+
+见录屏（assets目录下视频文件）。
+
+在鸿蒙上，当fontHeight为1时，文字跑到了y轴的下面。
+
+![78a64712a2509d30d3f67ff3d5519bb7_720](./assets/78a64712a2509d30d3f67ff3d5519bb7_720.jpg)
+
+当fontHeight设置为0.01时，文字跑到了y轴的上方，“有一些符合预期”了。
+
+![6f9cda8340bf454ae87b89bb0980137a_720](./assets/6f9cda8340bf454ae87b89bb0980137a_720.jpg)
+
+## 四、代码位置
+
+*  Native Render 代码见 `sample_graphics.cpp`
 
 函数位置：`libnativerender/src/main/cpp/render/sample_graphics.cpp:434` `SampleGraphics::DrawMyTest`
 
@@ -65,6 +120,8 @@ static void NativeOnDrawText(OH_Drawing_Canvas *canvas,  const char *fontPath, c
 
 
 
-* 3 .ttf文件在这个压缩包里
+## 五、资源文件
+
+*  .ttf文件在这个压缩包里
 
 ![image-20250523140354132](./assets/image-20250523140354132.png)
