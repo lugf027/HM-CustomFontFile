@@ -395,7 +395,6 @@ static void NativeOnDrawText(OH_Drawing_Canvas *canvas,  const char *fontPath, c
     // 修改基线设置为ALPHABETIC，这样可以保持与TextBlob一致的绘制位置
     OH_Drawing_SetTextStyleBaseLine(txtStyle, TEXT_BASELINE_ALPHABETIC);
     // 设置行高为1.0，避免额外的行间距影响
-//    OH_Drawing_SetTextStyleFontHeight(txtStyle, currentFont->getSize());
     OH_Drawing_SetTextStyleFontHeight(txtStyle, fontHeight); // 0.01 影响 baseline？
     // 设置字体类型等
     OH_Drawing_SetTextStyleFontFamilies(txtStyle, 1, myFontFamilies);
