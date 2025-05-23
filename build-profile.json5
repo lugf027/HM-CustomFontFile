@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/donaldlu/.ohos/config/default_CustomFontFile_iS3SERmY8eT26QhHxU09PjnN7aVaN-qYiwPC_GB-onM=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001AA6FF9DBA39C64964FC7B4532934BBEE572F3A28626FCBECE74DB358B1919BABE2E59CF48319D",
+          "profile": "/Users/donaldlu/.ohos/config/default_CustomFontFile_iS3SERmY8eT26QhHxU09PjnN7aVaN-qYiwPC_GB-onM=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/donaldlu/.ohos/config/default_CustomFontFile_iS3SERmY8eT26QhHxU09PjnN7aVaN-qYiwPC_GB-onM=.p12",
+          "storePassword": "0000001ABCC465CD1479684C078BAE0307415B53BC5EAA5B8804CEFAAA3FB08C963C6CF18EF6AD6F0BC6"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
@@ -37,6 +51,10 @@
           ]
         }
       ]
+    },
+    {
+      "name": "libnativerender",
+      "srcPath": "./libnativerender",
     }
   ]
 }
