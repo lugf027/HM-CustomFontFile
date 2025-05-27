@@ -37,8 +37,8 @@ export struct MainPage {
           .fontWeight(FontWeight.Bold);
 
         Row() {
-          Button('FontHeight 1')
-            .fontSize('16fp')
+          Button('Height 1')
+            .fontSize('14fp')
             .fontWeight(500)
             .margin({ bottom: 24 })
             .onClick(() => {
@@ -49,8 +49,8 @@ export struct MainPage {
             })
             .margin(2);
 
-          Button('FontHeight 0.01')
-            .fontSize('16fp')
+          Button('Height 0.01')
+            .fontSize('14fp')
             .fontWeight(500)
             .margin({ bottom: 24 })
             .onClick(() => {
@@ -58,6 +58,18 @@ export struct MainPage {
               this.xComponentController.getXComponentSurfaceRect();
               nativeRender.DrawWithCustomFont(BigInt(surfaceId), this.fontFilepath,
                 `abcdefghigklmn opqrstuvwxyz 1234567890`, 0.01);
+            })
+            .margin(2);
+
+          Button('Height 0.0001')
+            .fontSize('14fp')
+            .fontWeight(500)
+            .margin({ bottom: 24 })
+            .onClick(() => {
+              let surfaceId = this.xComponentController.getXComponentSurfaceId();
+              this.xComponentController.getXComponentSurfaceRect();
+              nativeRender.DrawWithCustomFont(BigInt(surfaceId), this.fontFilepath,
+                `abcdefghigklmn opqrstuvwxyz 1234567890`, 0.0001);
             })
             .margin(2);
 
