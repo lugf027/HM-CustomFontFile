@@ -37,7 +37,7 @@ export struct MainPage {
           .fontWeight(FontWeight.Bold);
 
         Row() {
-          Button('Height 1')
+          Button('FontHeight 1')
             .fontSize('14fp')
             .fontWeight(500)
             .margin({ bottom: 24 })
