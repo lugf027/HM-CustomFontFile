@@ -37,6 +37,18 @@ export struct MainPage {
           .fontWeight(FontWeight.Bold);
 
         Row() {
+          Button('FontHeight 1.25')
+            .fontSize('14fp')
+            .fontWeight(500)
+            .margin({ bottom: 24 })
+            .onClick(() => {
+              let surfaceId = this.xComponentController.getXComponentSurfaceId();
+              this.xComponentController.getXComponentSurfaceRect();
+              nativeRender.DrawWithCustomFont(BigInt(surfaceId), this.fontFilepath,
+                `abcdefghigklmn opqrstuvwxyz 1234567890`, 1.25);
+            })
+            .margin(2);
+
           Button('FontHeight 1')
             .fontSize('14fp')
             .fontWeight(500)

@@ -412,7 +412,15 @@ static void NativeOnDrawText(OH_Drawing_Canvas *canvas,  const char *fontPath, c
     OH_Drawing_LineMetrics* lineInfo = OH_Drawing_TypographyGetLineMetrics(typography);
     SAMPLE_LOGI("OH_Drawing_LineMetricsl ascender=%{public}.2f descender=%{public}.2f capHeight=%{public}.2f height=%{public}.2f y=%{public}.2f", 
     lineInfo->ascender, lineInfo->descender, lineInfo->capHeight, lineInfo->height, lineInfo->y);
-    OH_Drawing_TypographyPaint(typography, canvas, x, y - lineInfo->ascender);
+    
+    OH_Drawing_Font_Metrics fontInfo = lineInfo->firstCharMetrics;
+    SAMPLE_LOGI("OH_Drawing_Font_Metrics ascent=%{public}.2f descent=%{public}.2f top=%{public}.2f bottom=%{public}.2f leading=%{public}.2f underlinePosition=%{public}.2f", 
+    fontInfo.ascent, fontInfo.descent, fontInfo.top, fontInfo.bottom, fontInfo.leading, fontInfo.underlinePosition);
+    if (lineInfo->descender > lineInfo->ascender) {
+        OH_Drawing_TypographyPaint(typography, canvas, x, y);
+    } else {
+        OH_Drawing_TypographyPaint(typography, canvas, x, y + fontInfo.ascent);
+    }
 
     // 销毁创建的资源
     OH_Drawing_DestroyTypography(typography);
