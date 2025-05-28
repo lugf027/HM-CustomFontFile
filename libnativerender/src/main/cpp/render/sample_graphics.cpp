@@ -414,8 +414,15 @@ static void NativeOnDrawText(OH_Drawing_Canvas *canvas,  const char *fontPath, c
     lineInfo->ascender, lineInfo->descender, lineInfo->capHeight, lineInfo->height, lineInfo->y);
     
     OH_Drawing_Font_Metrics fontInfo = lineInfo->firstCharMetrics;
-    SAMPLE_LOGI("OH_Drawing_Font_Metrics ascent=%{public}.2f descent=%{public}.2f top=%{public}.2f bottom=%{public}.2f leading=%{public}.2f underlinePosition=%{public}.2f", 
-    fontInfo.ascent, fontInfo.descent, fontInfo.top, fontInfo.bottom, fontInfo.leading, fontInfo.underlinePosition);
+    SAMPLE_LOGI("OH_Drawing_Font_Metrics flags:%{public}d "
+                "ascent=%{public}.2f descent=%{public}.2f top=%{public}.2f bottom=%{public}.2f "
+    "capHeight=%{public}.2f xHeight=%{public}.2f "
+                "leading=%{public}.2f underlinePosition=%{public}.2f underlineThickness=%{public}.2f "
+                "strikeoutPosition=%{public}.2f strikeoutThickness=%{public}.2f ", 
+    fontInfo.flags,
+    fontInfo.ascent, fontInfo.descent, fontInfo.top, fontInfo.bottom, fontInfo.leading, 
+    fontInfo.capHeight, fontInfo.xHeight, 
+    fontInfo.underlinePosition, fontInfo.underlineThickness, fontInfo.strikeoutPosition, fontInfo.strikeoutThickness);
     if (lineInfo->descender > lineInfo->ascender) {
         OH_Drawing_TypographyPaint(typography, canvas, x, y);
     } else {
