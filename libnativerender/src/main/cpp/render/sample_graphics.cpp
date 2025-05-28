@@ -408,7 +408,11 @@ static void NativeOnDrawText(OH_Drawing_Canvas *canvas,  const char *fontPath, c
     OH_Drawing_TypographyHandlerAddText(handler, content);
     OH_Drawing_Typography *typography = OH_Drawing_CreateTypography(handler);
     OH_Drawing_TypographyLayout(typography, 10000);
-    OH_Drawing_TypographyPaint(typography, canvas, x, y);
+    
+    OH_Drawing_LineMetrics* lineInfo = OH_Drawing_TypographyGetLineMetrics(typography);
+    SAMPLE_LOGI("OH_Drawing_LineMetricsl ascender=%{public}.2f descender=%{public}.2f capHeight=%{public}.2f height=%{public}.2f y=%{public}.2f", 
+    lineInfo->ascender, lineInfo->descender, lineInfo->capHeight, lineInfo->height, lineInfo->y);
+    OH_Drawing_TypographyPaint(typography, canvas, x, y - lineInfo->ascender);
 
     // 销毁创建的资源
     OH_Drawing_DestroyTypography(typography);
@@ -439,7 +443,7 @@ void SampleGraphics::DrawMyTest(OH_Drawing_Canvas *canvas, const char *fontPath,
     OH_Drawing_CanvasConcatMatrix(canvas, matrix);
     OH_Drawing_MatrixDestroy(matrix);
 
-    int x = 10;
+    int x = 0;
     int y = 10;
     NativeOnDrawText(canvas, fontPath, content, fontHeight, x, y);
     NativeOnDrawLine(canvas, x, y);

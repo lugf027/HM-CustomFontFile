@@ -125,3 +125,16 @@ static void NativeOnDrawText(OH_Drawing_Canvas *canvas,  const char *fontPath, c
 *  .ttf文件在这个压缩包里
 
 ![image-20250523140354132](./assets/image-20250523140354132.png)
+
+
+
+## 六、结论与解决方案
+
+自定义.ttf字体文件时，在安卓平台上y为baseline；在鸿蒙平台上y为ascent。可以做一下位置的偏移。
+
+```c++
+OH_Drawing_LineMetrics* lineInfo = OH_Drawing_TypographyGetLineMetrics(typography);
+OH_Drawing_TypographyPaint(typography, canvas, x, y - lineInfo->ascender);
+```
+
+![image-20250528114606517](./assets/image-20250528114606517.png)
